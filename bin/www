@@ -69,6 +69,7 @@ function onError(error) {
       process.exit(1);
       break;
     case 'EADDRINUSE':
+      //address in use error - is when the port is already in use.
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
