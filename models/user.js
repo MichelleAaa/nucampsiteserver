@@ -20,4 +20,4 @@ const userSchema = new Schema({
 
 userSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema); //Here we are creating and exporting the modal in one line. The collection will be named users. The schema to use for the modal is userSchema.

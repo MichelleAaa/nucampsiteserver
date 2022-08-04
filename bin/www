@@ -42,8 +42,8 @@ server.on('listening', onListening);
  */ 
 
 const options = {
-    key: fs.readFileSync(__dirname+'/server.key'),
-    cert: fs.readFileSync(__dirname+'/server.cert')
+    key: fs.readFileSync(__dirname+'/server.key'), //This __dirname points to the current directory, which is the bin directory. This reads the contents of the server.key file into the express application’s running memory.
+    cert: fs.readFileSync(__dirname+'/server.cert') //This gives express access to the server.cert as well.
 };
 
 const secureServer = https.createServer(options, app);
@@ -52,7 +52,7 @@ const secureServer = https.createServer(options, app);
  * Listen on provided port, on all network interfaces.
  */
 
-secureServer.listen(app.get('secPort'), () => {
+secureServer.listen(app.get('secPort'), () => { //We stored 3443 as the secPort before, so we are asking the server to listen on that port.
     console.log('Server listening on port', app.get('secPort'));
 });
 secureServer.on('error', onError);

@@ -16,25 +16,28 @@ const favoriteRouter = require('./routes/favoriteRouter');
 const mongoose = require('mongoose');
 
 const url = config.mongoUrl;
-const connect = mongoose.connect(url, {
+const connect = mongoose.connect(url, { //connecting to mongoose. 
     useCreateIndex: true,
     useFindAndModify: false,
     useNewUrlParser: true, 
     useUnifiedTopology: true
-});
+}); //These options are to handle the depreciation warnings.
 
 connect.then(() => console.log('Connected correctly to server'), 
     err => console.log(err)
-);
+);//This is to handle the promise returned from the above connect method. If the connection succeeds, the first console.log will run. If it fails, then this second callback function will run.
+//It’s often more useful to handle rejections with the catch method, but you will also see this method as well sometimes.
+
 
 var app = express();
 
-app.all('*', (req, res, next) => {
-    if (req.secure) {
+app.all('*', (req, res, next) => { //This is a routing method that catches every type of request that comes into the server, get, put, post, delete, or any others.(Done by using the wildcard *.)
+    if (req.secure) { //req.secure property is set automatically by express as true when the connection that the request was sent over was HTTPS. 
+//If so, it will simply pass control to the next middleware connection.
       return next();
-    } else {
+    } else { //if the connection is not https, then:
         console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
-        res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
+        res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`); //The first argument is the status code, 301 is permanent redirect. The second argument is where to redirect to. 
     }
 });
 
